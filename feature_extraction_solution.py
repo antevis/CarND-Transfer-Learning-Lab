@@ -40,7 +40,8 @@ def load_bottleneck_data(training_file, validation_file):
 
 def main(_):
     # load bottleneck data
-    X_train, y_train, X_val, y_val = load_bottleneck_data(FLAGS.training_file, FLAGS.validation_file)
+    X_train, y_train, X_val, y_val = load_bottleneck_data(FLAGS.training_file,
+                                                          FLAGS.validation_file)
 
     print(X_train.shape, y_train.shape)
     print(X_val.shape, y_val.shape)
@@ -53,10 +54,16 @@ def main(_):
     x = Flatten()(inp)
     x = Dense(nb_classes, activation='softmax')(x)
     model = Model(inp, x)
-    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='adam',
+                  loss='sparse_categorical_crossentropy',
+                  metrics=['accuracy'])
 
     # train model
-    model.fit(X_train, y_train, nb_epoch=FLAGS.epochs, batch_size=FLAGS.batch_size, validation_data=(X_val, y_val), shuffle=True)
+    model.fit(X_train, y_train,
+              nb_epoch=FLAGS.epochs,
+              batch_size=FLAGS.batch_size,
+              validation_data=(X_val, y_val),
+              shuffle=True)
 
 
 # parses flags and calls the `main` function above
